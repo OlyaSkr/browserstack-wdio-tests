@@ -1,1 +1,0 @@
-# browserstack-wdio-tests
