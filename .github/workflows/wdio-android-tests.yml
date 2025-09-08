@@ -1,0 +1,47 @@
+name: Run WebdriverIO Android Tests
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+jobs:
+  android-tests:
+    runs-on: ubuntu-latest
+
+    env:
+      BROWSERSTACK_USERNAME: ${{ secrets.BROWSERSTACK_USERNAME }}
+      BROWSERSTACK_ACCESS_KEY: ${{ secrets.BROWSERSTACK_ACCESS_KEY }}
+      BROWSERSTACK_APP_ID: ${{ secrets.BROWSERSTACK_APP_ID }}
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: 22
+
+      - name: Install dependencies
+        run: npm install
+
+      - name: Clean previous Allure results
+        run: npm run clean:allure
+
+      - name: Run tests on Pixel 6
+        run: npm run wdio:pixel6
+
+      - name: Run tests on Samsung Galaxy S24
+        run: npm run wdio:galaxys24
+
+      - name: Generate Allure report
+        run: npm run allure:report:generate
+
+      - name: Deploy Allure report to GitHub Pages
+        uses: peaceiris/actions-gh-pages@v7
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: ./allure-report
+          publish_branch: gh-pages
