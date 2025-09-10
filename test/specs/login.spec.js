@@ -4,7 +4,7 @@ import { testData } from '../../data/testData';
 import { faker } from '@faker-js/faker';
 import allureReporter from '@wdio/allure-reporter';
 
-describe('Mobile app testing', () => {
+describe('Login page', () => {
   it('login with invalid required fields', async () => {
     allureReporter.addDescription(
       'Verify that login fails with invalid email and password and shows proper validation messages.'
