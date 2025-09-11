@@ -60,6 +60,25 @@ describe('Verify forms', () => {
     await FormsPage.confirmPopup();
   });
 
+  it.only('Verify dropdown', async () => {
+    allureReporter.addDescription(
+      'This test selects several options from the dropdown and verifies the selected value.'
+    );
+
+    allureReporter.addStep('Select "webdriver.io is awesome"');
+    await FormsPage.selectOption(
+      testData.formsPage.dropdownOptionValues.webdriver
+    );
+
+    allureReporter.addStep('Select "Appium is awesome"');
+    await FormsPage.selectOption(
+      testData.formsPage.dropdownOptionValues.appium
+    );
+
+    allureReporter.addStep('Select "This app is awesome"');
+    await FormsPage.selectOption(testData.formsPage.dropdownOptionValues.app);
+  });
+
   afterEach(async () => {
     await browser.closeApp();
   });

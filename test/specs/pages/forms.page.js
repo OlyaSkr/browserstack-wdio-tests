@@ -26,6 +26,20 @@ class FormsPage {
     return $(`//android.widget.Button[@resource-id="android:id/button1"]`);
   }
 
+  get dropdown() {
+    return $(
+      '//android.view.ViewGroup[@content-desc="Dropdown" or @resource-id="android_touchable_wrapper"]'
+    );
+  }
+
+  dropdownOption(optionText) {
+    return $(`//android.widget.CheckedTextView[@text="${optionText}"]`);
+  }
+
+  editText(optionText) {
+    return $(`//android.widget.EditText[contains(@text, "${optionText}")]`);
+  }
+
   async enterText(value) {
     await this.inputField.waitForDisplayed();
     await this.inputField.click();
@@ -45,6 +59,22 @@ class FormsPage {
   async confirmPopup() {
     await this.okButton.waitForDisplayed();
     await this.okButton.click();
+  }
+
+  async selectOption(optionText) {
+    await this.dropdown.waitForDisplayed();
+    await this.dropdown.click();
+
+    const optionElement = this.dropdownOption(optionText);
+    await optionElement.waitForDisplayed();
+    await optionElement.click();
+
+    const editElement = this.editText(optionText);
+    await editElement.waitForDisplayed();
+
+    const value = await editElement.getText();
+    console.log(value);
+    await expect(value).toEqual(optionText);
   }
 }
 

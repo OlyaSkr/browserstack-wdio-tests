@@ -16,6 +16,11 @@ export const testData = {
       off: 'Click to turn the switch OFF',
     },
     activeButtonMessage: 'This button is active',
+    dropdownOptionValues: {
+      webdriver: 'webdriver.io is awesome',
+      appium: 'Appium is awesome',
+      app: 'This app is awesome',
+    },
   },
 
   loginPage: {
